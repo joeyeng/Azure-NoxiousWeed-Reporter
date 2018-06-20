@@ -51,7 +51,7 @@ namespace NoxiousWeedsWebApp.Controllers
                         stream.Position = 0;
                         await blockBlob.UploadFromStreamAsync(stream);
 
-                        var predictionResult = MakePredictionRequest(stream.ToArray()).Result;
+                        var predictionResult = await MakePredictionRequest(stream.ToArray());
 
                         var topResult = predictionResult
                             .Predictions
@@ -82,7 +82,7 @@ namespace NoxiousWeedsWebApp.Controllers
             var client = new HttpClient();
 
             // Request headers - replace this example key with your valid subscription key.
-            client.DefaultRequestHeaders.Add("Prediction-Key", "45874fe0badb45b38bd77392e1fbf974");
+            client.DefaultRequestHeaders.Add("Prediction-Key", _appSettings.PredictionEndpointApiKey);
 
             // Prediction URL - replace this example URL with your valid prediction URL.
             string url = "";
