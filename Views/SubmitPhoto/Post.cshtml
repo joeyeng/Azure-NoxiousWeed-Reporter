@@ -1,0 +1,59 @@
+﻿@model NoxiousWeedsWebApp.Models.PredictionResponse
+
+@{
+    ViewData["Title"] = "Submit Photo Response";
+}
+
+<h2>Prediction Response</h2>
+
+<div>
+
+    @if (Model.Message == "Success")
+    {
+        <h4>Noxious Weed Identified!</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </dt>
+            <dd>
+                <img src="@Model.ImageUrl" />
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Tag)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Tag)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Probability)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Probability)
+            </dd>
+        </dl>
+        <h4>Report Noxious Weed</h4>
+        <form method="post" asp-controller="SubmitReport" asp-action="Post">
+            @Html.HiddenFor(model => model.ImageUrl)
+            @Html.HiddenFor(model => model.Probability)
+            @Html.HiddenFor(model => model.Tag)
+            <dl class="dl-horizontal">
+                <dt>Name</dt>
+                <dd><input type="text" name="Name" /></dd>
+                <dt>Phone Number</dt>
+                <dd><input type="text" name="PhoneNumber" /></dd>
+                <dt>Email</dt>
+                <dd><input type="text" name="Email" /></dd>
+            </dl>
+        </form>
+    }
+    else
+    {
+        <h4>Unable to Identify Noxious Weed</h4>
+        <hr />
+        @Html.DisplayFor(model => model.Message)
+    }
+</div>
+<div>
+    <a asp-action="Index" asp-controller="Home">Back Home</a>
+</div>
